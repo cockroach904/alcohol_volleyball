@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微醺殺球 | 18人排球酒精大亂鬥</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+            /* 增加活潑的點陣背景 */
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            color: #1e293b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .poster-container {
+            width: 100%;
+            max-w: 600px;
+            background: linear-gradient(145deg, #ffffff, #fffbeb);
+            border: 4px solid #fde047;
+            box-shadow: 0 20px 40px -5px rgba(251, 191, 36, 0.25), 0 0 20px rgba(244, 114, 182, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .glow-orb-1 {
+            position: absolute; top: -80px; left: -80px; width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(253,224,71,0.5) 0%, rgba(255,255,255,0) 70%);
+            z-index: 0;
+        }
+        .glow-orb-2 {
+            position: absolute; bottom: -80px; right: -80px; width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(56,189,248,0.3) 0%, rgba(255,255,255,0) 70%);
+            z-index: 0;
+        }
+        .content-z { position: relative; z-index: 10; }
+        .lively-title {
+            background: -webkit-linear-gradient(45deg, #ff4e50, #f9d423);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(3px 4px 0px rgba(255, 78, 80, 0.15));
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid #f1f5f9;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poster-container rounded-3xl p-8 sm:p-10">
+        <!-- Background Glows -->
+        <div class="glow-orb-1"></div>
+        <div class="glow-orb-2"></div>
+
+        <div class="content-z">
+            <!-- Header -->
+            <div class="text-center mb-8 relative">
+                <span class="bg-rose-500 text-white text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md inline-block transform -rotate-2">
+                    🎉 極限派對賽事
+                </span>
+                <h1 class="text-5xl sm:text-6xl font-black mt-4 mb-2 lively-title italic tracking-tight transform rotate-1">
+                    微醺殺球
+                </h1>
+                <p class="text-sky-500 text-lg sm:text-xl font-black tracking-wide mt-2">
+                    18人排球酒精大亂鬥
+                </p>
+                <p class="text-slate-500 text-sm mt-2 font-bold bg-white/50 inline-block px-3 py-1 rounded-lg">
+                    「考驗球技、酒量、心機與恥力的生存戰」
+                </p>
+            </div>
+
+            <!-- 搭檔名單區 -->
+            <div class="bg-white rounded-2xl p-5 mb-8 border-2 border-amber-100 shadow-sm relative z-10">
+                <div class="text-center mb-4">
+                    <div class="text-3xl mb-1 drop-shadow-sm inline-block transform hover:scale-110 transition-transform cursor-default">👥</div>
+                    <div class="font-black text-slate-800 text-xl tracking-wide">9 組搭檔 <span class="text-sm text-rose-500 ml-1">(生命共同體)</span></div>
+                </div>
+                <!-- 名單 Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-sm font-bold text-slate-600">
+                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
+                        <span class="text-sky-500 mr-1 text-base">A</span> ＿＿ & ＿＿
+                    </div>
+                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
+                        <span class="text-sky-500 mr-1 text-base">B</span> ＿＿ & ＿＿
+                    </div>
+                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
+                        <span class="text-sky-500 mr-1 text-base">C</span> ＿＿ & ＿＿
+                    </div>
+                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
+                        <span class="text-sky-500 mr-1 text-base">D</span> ＿＿ & ＿＿
+                    </div>
+                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
+                        <span class="text-sky-500 mr-1 text-base">E</span> ＿＿ & ＿＿
+                    </div>
+                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
+                        <span class="text-sky-500 mr-1 text-base">F</span> ＿＿ & ＿＿
+                    </div>
+                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
+                        <span class="text-sky-500 mr-1 text-base">G</span> ＿＿ & ＿＿
+                    </div>
+                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
+                        <span class="text-sky-500 mr-1 text-base">H</span> ＿＿ & ＿＿
+                    </div>
+                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
+                        <span class="text-sky-500 mr-1 text-base">I</span> ＿＿ & ＿＿
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 relative z-10">
+                
+                <!-- Box 1 -->
+                <div class="glass-card rounded-2xl p-5 border-t-4 border-t-rose-400 flex flex-col">
+                    <h3 class="text-rose-500 font-black text-lg mb-2 flex items-center">
+                        <span class="text-2xl mr-2">🃏</span> 命運卡牌庫
+                    </h3>
+                    <p class="text-xs text-rose-600 font-bold mb-3">📌 規則：上場時每人需抽一張</p>
+                    <div class="space-y-2.5 flex-grow">
+                        <!-- Clickable Cards -->
+                        <div onclick="showModal('失誤/得分喝', '最基本的卡牌。<br><br>【觸發條件】有人失誤或得分。<br>【效果】失誤者或得分者必須直接喝一杯！', '🍺', 'text-rose-500', 'border-rose-400')" class="bg-rose-50/80 hover:bg-rose-100 cursor-pointer p-2.5 rounded-xl border border-rose-100 hover:border-rose-300 transition-all transform hover:-translate-y-0.5 shadow-sm flex items-center justify-between group">
+                            <div class="font-bold text-slate-700 group-hover:text-rose-600 transition-colors"><span class="text-rose-500 mr-1">🍺</span> 失誤/得分喝</div>
+                            <div class="text-rose-400/50 group-hover:text-rose-500 text-xs font-black">點擊查看 ▶</div>
+                        </div>
+                        <div onclick="showModal('指定殺手', '充滿火藥味的殺手卡。<br><br>【觸發條件】你的隊伍得分後。<br>【效果】可以霸道指定對手場上<b>任意一人</b>喝一杯！', '🎯', 'text-rose-500', 'border-rose-400')" class="bg-rose-50/80 hover:bg-rose-100 cursor-pointer p-2.5 rounded-xl border border-rose-100 hover:border-rose-300 transition-all transform hover:-translate-y-0.5 shadow-sm flex items-center justify-between group">
+                            <div class="font-bold text-slate-700 group-hover:text-rose-600 transition-colors"><span class="text-rose-500 mr-1">🎯</span> 指定殺手</div>
+                            <div class="text-rose-400/50 group-hover:text-rose-500 text-xs font-black">點擊查看 ▶</div>
+                        </div>
+                        <div onclick="showModal('連坐牽連', '生命共同體的極致展現。<br><br>【觸發條件】抽到此卡者發生失誤。<br>【效果】不只你要喝，你的<b>「雙人搭檔」</b>也必須陪你一起喝！', '🔗', 'text-rose-500', 'border-rose-400')" class="bg-rose-50/80 hover:bg-rose-100 cursor-pointer p-2.5 rounded-xl border border-rose-100 hover:border-rose-300 transition-all transform hover:-translate-y-0.5 shadow-sm flex items-center justify-between group">
+                            <div class="font-bold text-slate-700 group-hover:text-rose-600 transition-colors"><span class="text-rose-500 mr-1">🔗</span> 連坐牽連</div>
+                            <div class="text-rose-400/50 group-hover:text-rose-500 text-xs font-black">點擊查看 ▶</div>
+                        </div>
+                        <div onclick="showModal('發球壯膽', '讓發球變得充滿未知數。<br><br>【觸發條件】輪到你發球前。<br>【效果】每次發球前，都必須<b>先乾一口</b>才能把球發出去！', '🦁', 'text-rose-500', 'border-rose-400')" class="bg-rose-50/80 hover:bg-rose-100 cursor-pointer p-2.5 rounded-xl border border-rose-100 hover:border-rose-300 transition-all transform hover:-translate-y-0.5 shadow-sm flex items-center justify-between group">
+                            <div class="font-bold text-slate-700 group-hover:text-rose-600 transition-colors"><span class="text-rose-500 mr-1">🦁</span> 發球壯膽</div>
+                            <div class="text-rose-400/50 group-hover:text-rose-500 text-xs font-black">點擊查看 ▶</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Box 2 -->
+                <div class="glass-card rounded-2xl p-5 border-t-4 border-t-sky-400 flex flex-col">
+                    <h3 class="text-sky-500 font-black text-lg mb-2 flex items-center">
+                        <span class="text-2xl mr-2">📜</span> 任務換魔法
+                    </h3>
+                    <p class="text-xs text-sky-600 font-bold leading-relaxed mb-3">
+                        📌 規則：賽前兩隊各派一人抽取該場任務，整隊完成任務後可獲得魔法卡！
+                    </p>
+                    <div class="bg-white/70 rounded-xl p-3 border border-sky-100 flex-grow flex flex-col gap-3">
+                        
+                        <!-- 任務範例 -->
+                        <div>
+                            <div class="text-xs text-sky-600 font-black mb-2 flex items-center"><span class="mr-1">🎯</span> 任務範例 (點擊查看)：</div>
+                            <div class="flex flex-col gap-2">
+                                <button onclick="showModal('舉球員逆襲', '【達成條件】<br>舉球員不舉球，直接使用<b>二次攻擊（吊球或直接扣殺）</b>並成功得分 <b>兩次</b>。<br><br>✨ 完成即可向裁判兌換一張魔法卡！', '🏐', 'text-sky-500', 'border-sky-400')" class="bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 hover:border-sky-400 transition-all px-3 py-2 rounded-lg text-sm font-bold shadow-sm transform hover:-translate-y-0.5 text-left w-full flex items-center">
+                                    <span class="mr-2 text-lg">🏐</span> 舉球員逆襲
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 魔法效果 -->
+                        <div>
+                            <div class="text-xs text-sky-600 font-black mb-2 flex items-center"><span class="mr-1">⚡</span> 魔法效果 (點擊查看)：</div>
+                            <div class="flex flex-col gap-2">
+                                <button onclick="showModal('地心引力', '強大的物理干擾魔法。<br><br>【效果】指定對手在接下來的 3 分內<b>「禁止跳躍」</b>（包含跳發、起跳扣球與攔網，僅能站立擊球）。', '⚡', 'text-sky-500', 'border-sky-400')" class="bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 hover:border-sky-400 transition-all px-3 py-2 rounded-lg text-sm font-bold shadow-sm transform hover:-translate-y-0.5 text-left w-full flex items-center">
+                                    <span class="mr-2 text-lg">⚡</span> 地心引力
+                                </button>
+                                <button onclick="showModal('位置大風吹', '瞬間打亂對手默契。<br><br>【效果】立即強制對手場上 6 人<b>順時針輪轉兩個位置</b>，破壞對方的舉球與攻擊陣型！', '🌪️', 'text-sky-500', 'border-sky-400')" class="bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 hover:border-sky-400 transition-all px-3 py-2 rounded-lg text-sm font-bold shadow-sm transform hover:-translate-y-0.5 text-left w-full flex items-center">
+                                    <span class="mr-2 text-lg">🌪️</span> 位置大風吹
+                                </button>
+                                <button onclick="showModal('無敵星星', '最強的防禦魔法。<br><br>【效果】啟動後，本局接下來的<b> 2 次失分內</b>，無論發生什麼失誤，<b>全隊皆可免除懲罰（免喝）</b>！也可抵消對手的一次魔法卡。', '⭐', 'text-sky-500', 'border-sky-400')" class="bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 hover:border-sky-400 transition-all px-3 py-2 rounded-lg text-sm font-bold shadow-sm transform hover:-translate-y-0.5 text-left w-full flex items-center">
+                                    <span class="mr-2 text-lg">⭐</span> 無敵星星
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer / Rule -->
+            <div class="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 rounded-2xl p-5 text-center shadow-lg relative z-10 transform hover:-translate-y-1 transition-transform">
+                <h3 class="text-white font-black text-xl mb-2 drop-shadow-md">🏆 終極懲罰警告</h3>
+                <p class="text-white/95 text-sm font-bold">
+                    總積分最低的一組「雙人搭檔」<br>
+                    將接受賽後 <span class="bg-white text-rose-500 px-2 py-0.5 rounded-md mx-1 shadow-sm">大會終極特調</span> 處刑並負責清場！
+                </p>
+            </div>
+
+            <div class="text-center mt-6 text-xs text-slate-400 font-black tracking-widest bg-white/60 inline-block px-4 py-2 rounded-full w-full">
+                ⚠️ 飲酒過量有礙健康 · 開心打球平安回家 ⚠️
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal Background & Content -->
+    <div id="cardModal" class="fixed inset-0 z-50 hidden flex justify-center items-center px-4 transition-opacity duration-200">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm cursor-pointer" onclick="closeModal()"></div>
+        
+        <!-- Modal Card -->
+        <div id="modalContent" class="bg-white rounded-3xl p-8 max-w-sm w-full relative z-10 border-4 border-rose-400 shadow-2xl transform scale-95 opacity-0 transition-all duration-200 ease-out">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-300 hover:text-slate-500 bg-slate-100 hover:bg-slate-200 rounded-full w-8 h-8 flex items-center justify-center font-black text-xl transition-colors">
+                &times;
+            </button>
+            <div class="text-center mt-2">
+                <div id="modalIcon" class="text-7xl mb-4 drop-shadow-md transform hover:scale-110 transition-transform cursor-default">🃏</div>
+                <h2 id="modalTitle" class="text-3xl font-black mb-4 text-rose-500">卡牌名稱</h2>
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                    <p id="modalDesc" class="text-slate-600 font-bold leading-relaxed text-sm text-left">
+                        卡牌效果說明
+                    </p>
+                </div>
+                <button onclick="closeModal()" class="mt-6 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 px-8 rounded-full shadow-md transform hover:-translate-y-0.5 transition-all">
+                    了解！
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Modal -->
+    <script>
+        function showModal(title, desc, icon, titleColor, borderColor) {
+            // 設定內容
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalTitle').className = `text-3xl font-black mb-4 ${titleColor}`;
+            document.getElementById('modalDesc').innerHTML = desc;
+            document.getElementById('modalIcon').innerText = icon;
+            
+            // 設定邊框顏色對應卡牌類型
+            const modalContent = document.getElementById('modalContent');
+            modalContent.className = `bg-white rounded-3xl p-8 max-w-sm w-full relative z-10 border-4 shadow-2xl transform scale-95 opacity-0 transition-all duration-200 ease-out ${borderColor}`;
+
+            // 顯示 Modal
+            const modal = document.getElementById('cardModal');
+            modal.classList.remove('hidden');
+            
+            // 觸發彈出動畫
+            requestAnimationFrame(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('cardModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            // 縮小淡出動畫
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            
+            // 等待動畫結束後隱藏
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+        }
+
+        // 點擊 Esc 鍵也可以關閉視窗
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !document.getElementById('cardModal').classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
