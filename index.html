@@ -5,273 +5,414 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>微醺殺球 | 18人排球酒精大亂鬥</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: #f8fafc;
-            /* 增加活潑的點陣背景 */
-            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
-            background-size: 24px 24px;
-            color: #1e293b;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+        :root {
+            --bg-deep: #0f172a;
+            --accent-primary: #f43f5e;
+            --accent-secondary: #0ea5e9;
+            --accent-tertiary: #f59e0b;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
-        .poster-container {
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-deep);
+            color: #f8fafc;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated Mesh Background */
+        .mesh-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-w: 600px;
-            background: linear-gradient(145deg, #ffffff, #fffbeb);
-            border: 4px solid #fde047;
-            box-shadow: 0 20px 40px -5px rgba(251, 191, 36, 0.25), 0 0 20px rgba(244, 114, 182, 0.15);
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(244, 63, 94, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 100% 0%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            filter: blur(80px);
+            animation: mesh-move 20s ease-infinite alternate;
+        }
+
+        @keyframes mesh-move {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(100px, auto);
+            gap: 1.5rem;
+        }
+
+        .hero-title {
+            background: linear-gradient(to right, #f43f5e, #fb923c, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+
+        .card-hover-effect {
             position: relative;
             overflow: hidden;
         }
-        .glow-orb-1 {
-            position: absolute; top: -80px; left: -80px; width: 300px; height: 300px;
-            background: radial-gradient(circle, rgba(253,224,71,0.5) 0%, rgba(255,255,255,0) 70%);
-            z-index: 0;
+
+        .card-hover-effect::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.05),
+                transparent
+            );
+            transition: 0.5s;
         }
-        .glow-orb-2 {
-            position: absolute; bottom: -80px; right: -80px; width: 350px; height: 350px;
-            background: radial-gradient(circle, rgba(56,189,248,0.3) 0%, rgba(255,255,255,0) 70%);
-            z-index: 0;
+
+        .card-hover-effect:hover::after {
+            left: 100%;
         }
-        .content-z { position: relative; z-index: 10; }
-        .lively-title {
-            background: -webkit-linear-gradient(45deg, #ff4e50, #f9d423);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(3px 4px 0px rgba(255, 78, 80, 0.15));
+
+        .glow-button {
+            position: relative;
+            transition: all 0.3s ease;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            border: 2px solid #f1f5f9;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(8px);
+
+        .glow-button:hover {
+            box-shadow: 0 0 20px rgba(244, 63, 94, 0.4);
         }
+
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Staggered Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: reveal-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes reveal-up {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
     </style>
 </head>
-<body>
+<body class="p-6 md:p-12 lg:p-20">
+    <div class="mesh-bg"></div>
 
-    <div class="poster-container rounded-3xl p-8 sm:p-10">
-        <!-- Background Glows -->
-        <div class="glow-orb-1"></div>
-        <div class="glow-orb-2"></div>
-
-        <div class="content-z">
-            <!-- Header -->
-            <div class="text-center mb-8 relative">
-                <span class="bg-rose-500 text-white text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md inline-block transform -rotate-2">
-                    🎉 極限派對賽事
-                </span>
-                <h1 class="text-5xl sm:text-6xl font-black mt-4 mb-2 lively-title italic tracking-tight transform rotate-1">
-                    微醺殺球
-                </h1>
-                <p class="text-sky-500 text-lg sm:text-xl font-black tracking-wide mt-2">
-                    18人排球酒精大亂鬥
-                </p>
-                <p class="text-slate-500 text-sm mt-2 font-bold bg-white/50 inline-block px-3 py-1 rounded-lg">
-                    「考驗球技、酒量、心機與恥力的生存戰」
-                </p>
+    <main class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-16 reveal">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-semibold mb-6">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                極限派對賽事 · 2026 EDITION
             </div>
+            <h1 class="text-6xl md:text-8xl hero-title mb-6">
+                微醺殺球
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
+                18人排球酒精大亂鬥。考驗球技、酒量、心機與恥力的生存戰。
+            </p>
+        </header>
 
-            <!-- 搭檔名單區 -->
-            <div class="bg-white rounded-2xl p-5 mb-8 border-2 border-amber-100 shadow-sm relative z-10">
-                <div class="text-center mb-4">
-                    <div class="text-3xl mb-1 drop-shadow-sm inline-block transform hover:scale-110 transition-transform cursor-default">👥</div>
-                    <div class="font-black text-slate-800 text-xl tracking-wide">9 組搭檔 <span class="text-sm text-rose-500 ml-1">(生命共同體)</span></div>
+        <!-- Bento Grid -->
+        <div class="bento-grid">
+            
+            <!-- Partners Card -->
+            <section class="glass-panel p-8 col-span-4 lg:col-span-2 reveal delay-1">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold flex items-center gap-3">
+                            <i data-lucide="users" class="text-sky-400"></i>
+                            9 組搭檔
+                        </h2>
+                        <p class="text-slate-500 text-sm mt-1">生命共同體：一人失誤，全組受難</p>
+                    </div>
+                    <span class="px-3 py-1 rounded-lg bg-sky-500/10 text-sky-400 text-xs font-bold ring-1 ring-sky-500/20">9 TEAMS</span>
                 </div>
-                <!-- 名單 Grid -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-sm font-bold text-slate-600">
-                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
-                        <span class="text-sky-500 mr-1 text-base">A</span> ＿＿ & ＿＿
-                    </div>
-                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
-                        <span class="text-sky-500 mr-1 text-base">B</span> ＿＿ & ＿＿
-                    </div>
-                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
-                        <span class="text-sky-500 mr-1 text-base">C</span> ＿＿ & ＿＿
-                    </div>
-                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
-                        <span class="text-sky-500 mr-1 text-base">D</span> ＿＿ & ＿＿
-                    </div>
-                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
-                        <span class="text-sky-500 mr-1 text-base">E</span> ＿＿ & ＿＿
-                    </div>
-                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
-                        <span class="text-sky-500 mr-1 text-base">F</span> ＿＿ & ＿＿
-                    </div>
-                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
-                        <span class="text-sky-500 mr-1 text-base">G</span> ＿＿ & ＿＿
-                    </div>
-                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
-                        <span class="text-sky-500 mr-1 text-base">H</span> ＿＿ & ＿＿
-                    </div>
-                    <div class="bg-slate-50 hover:bg-sky-50 transition-colors rounded-xl p-2 text-center border border-slate-100 shadow-sm">
-                        <span class="text-sky-500 mr-1 text-base">I</span> ＿＿ & ＿＿
-                    </div>
-                </div>
-            </div>
-
-            <!-- Features Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 relative z-10">
                 
-                <!-- Box 1 -->
-                <div class="glass-card rounded-2xl p-5 border-t-4 border-t-rose-400 flex flex-col">
-                    <h3 class="text-rose-500 font-black text-lg mb-2 flex items-center">
-                        <span class="text-2xl mr-2">🃏</span> 命運卡牌庫
-                    </h3>
-                    <p class="text-xs text-rose-600 font-bold mb-3">📌 規則：上場時每人需抽一張</p>
-                    <div class="space-y-2.5 flex-grow">
-                        <!-- Clickable Cards -->
-                        <div onclick="showModal('失誤/得分喝', '最基本的卡牌。<br><br>【觸發條件】有人失誤或得分。<br>【效果】失誤者或得分者必須直接喝一杯！', '🍺', 'text-rose-500', 'border-rose-400')" class="bg-rose-50/80 hover:bg-rose-100 cursor-pointer p-2.5 rounded-xl border border-rose-100 hover:border-rose-300 transition-all transform hover:-translate-y-0.5 shadow-sm flex items-center justify-between group">
-                            <div class="font-bold text-slate-700 group-hover:text-rose-600 transition-colors"><span class="text-rose-500 mr-1">🍺</span> 失誤/得分喝</div>
-                            <div class="text-rose-400/50 group-hover:text-rose-500 text-xs font-black">點擊查看 ▶</div>
-                        </div>
-                        <div onclick="showModal('指定殺手', '充滿火藥味的殺手卡。<br><br>【觸發條件】你的隊伍得分後。<br>【效果】可以霸道指定對手場上<b>任意一人</b>喝一杯！', '🎯', 'text-rose-500', 'border-rose-400')" class="bg-rose-50/80 hover:bg-rose-100 cursor-pointer p-2.5 rounded-xl border border-rose-100 hover:border-rose-300 transition-all transform hover:-translate-y-0.5 shadow-sm flex items-center justify-between group">
-                            <div class="font-bold text-slate-700 group-hover:text-rose-600 transition-colors"><span class="text-rose-500 mr-1">🎯</span> 指定殺手</div>
-                            <div class="text-rose-400/50 group-hover:text-rose-500 text-xs font-black">點擊查看 ▶</div>
-                        </div>
-                        <div onclick="showModal('連坐牽連', '生命共同體的極致展現。<br><br>【觸發條件】抽到此卡者發生失誤。<br>【效果】不只你要喝，你的<b>「雙人搭檔」</b>也必須陪你一起喝！', '🔗', 'text-rose-500', 'border-rose-400')" class="bg-rose-50/80 hover:bg-rose-100 cursor-pointer p-2.5 rounded-xl border border-rose-100 hover:border-rose-300 transition-all transform hover:-translate-y-0.5 shadow-sm flex items-center justify-between group">
-                            <div class="font-bold text-slate-700 group-hover:text-rose-600 transition-colors"><span class="text-rose-500 mr-1">🔗</span> 連坐牽連</div>
-                            <div class="text-rose-400/50 group-hover:text-rose-500 text-xs font-black">點擊查看 ▶</div>
-                        </div>
-                        <div onclick="showModal('發球壯膽', '讓發球變得充滿未知數。<br><br>【觸發條件】輪到你發球前。<br>【效果】每次發球前，都必須<b>先乾一口</b>才能把球發出去！', '🦁', 'text-rose-500', 'border-rose-400')" class="bg-rose-50/80 hover:bg-rose-100 cursor-pointer p-2.5 rounded-xl border border-rose-100 hover:border-rose-300 transition-all transform hover:-translate-y-0.5 shadow-sm flex items-center justify-between group">
-                            <div class="font-bold text-slate-700 group-hover:text-rose-600 transition-colors"><span class="text-rose-500 mr-1">🦁</span> 發球壯膽</div>
-                            <div class="text-rose-400/50 group-hover:text-rose-500 text-xs font-black">點擊查看 ▶</div>
-                        </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <!-- Teams -->
+                    <script>
+                        const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+                        const teamsHtml = letters.map(l => `
+                            <div class="group relative p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all cursor-default overflow-hidden">
+                                <div class="absolute -right-2 -bottom-2 opacity-5 group-hover:opacity-10 transition-opacity">
+                                    <span class="text-4xl font-black">${l}</span>
+                                </div>
+                                <span class="text-sky-400 text-xs font-black block mb-1">TEAM ${l}</span>
+                                <div class="text-slate-300 font-bold text-sm">＿＿ & ＿＿</div>
+                            </div>
+                        `).join('');
+                        document.write(teamsHtml);
+                    </script>
+                </div>
+            </section>
+
+            <!-- Card Library -->
+            <section class="glass-panel p-8 col-span-4 lg:col-span-2 reveal delay-2 overflow-hidden">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold flex items-center gap-3">
+                            <i data-lucide="layers" class="text-rose-400"></i>
+                            命運卡牌庫
+                        </h2>
+                        <p class="text-slate-500 text-sm mt-1">上場時每人隨機抽取一張</p>
                     </div>
                 </div>
 
-                <!-- Box 2 -->
-                <div class="glass-card rounded-2xl p-5 border-t-4 border-t-sky-400 flex flex-col">
-                    <h3 class="text-sky-500 font-black text-lg mb-2 flex items-center">
-                        <span class="text-2xl mr-2">📜</span> 任務換魔法
-                    </h3>
-                    <p class="text-xs text-sky-600 font-bold leading-relaxed mb-3">
-                        📌 規則：賽前兩隊各派一人抽取該場任務，整隊完成任務後可獲得魔法卡！
-                    </p>
-                    <div class="bg-white/70 rounded-xl p-3 border border-sky-100 flex-grow flex flex-col gap-3">
-                        
-                        <!-- 任務範例 -->
-                        <div>
-                            <div class="text-xs text-sky-600 font-black mb-2 flex items-center"><span class="mr-1">🎯</span> 任務範例 (點擊查看)：</div>
-                            <div class="flex flex-col gap-2">
-                                <button onclick="showModal('舉球員逆襲', '【達成條件】<br>舉球員不舉球，直接使用<b>二次攻擊（吊球或直接扣殺）</b>並成功得分 <b>兩次</b>。<br><br>✨ 完成即可向裁判兌換一張魔法卡！', '🏐', 'text-sky-500', 'border-sky-400')" class="bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 hover:border-sky-400 transition-all px-3 py-2 rounded-lg text-sm font-bold shadow-sm transform hover:-translate-y-0.5 text-left w-full flex items-center">
-                                    <span class="mr-2 text-lg">🏐</span> 舉球員逆襲
-                                </button>
-                            </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Cards -->
+                    <div onclick="showModal('失誤喝', '最基本的懲罰卡。<br><br>【觸發條件】你發生了任何形式的失誤（掛網、出界、過網...等）。<br>【效果】失誤者必須直接喝一杯！', '🚫', 'text-rose-400', 'border-rose-500/30')" class="group glass-panel bg-white/5 p-4 flex items-center gap-4 cursor-pointer hover:bg-rose-500/10 hover:border-rose-500/30">
+                        <div class="w-12 h-12 rounded-xl bg-rose-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="ban" class="text-rose-400 w-6 h-6"></i>
                         </div>
-
-                        <!-- 魔法效果 -->
                         <div>
-                            <div class="text-xs text-sky-600 font-black mb-2 flex items-center"><span class="mr-1">⚡</span> 魔法效果 (點擊查看)：</div>
-                            <div class="flex flex-col gap-2">
-                                <button onclick="showModal('地心引力', '強大的物理干擾魔法。<br><br>【效果】指定對手在接下來的 3 分內<b>「禁止跳躍」</b>（包含跳發、起跳扣球與攔網，僅能站立擊球）。', '⚡', 'text-sky-500', 'border-sky-400')" class="bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 hover:border-sky-400 transition-all px-3 py-2 rounded-lg text-sm font-bold shadow-sm transform hover:-translate-y-0.5 text-left w-full flex items-center">
-                                    <span class="mr-2 text-lg">⚡</span> 地心引力
-                                </button>
-                                <button onclick="showModal('位置大風吹', '瞬間打亂對手默契。<br><br>【效果】立即強制對手場上 6 人<b>順時針輪轉兩個位置</b>，破壞對方的舉球與攻擊陣型！', '🌪️', 'text-sky-500', 'border-sky-400')" class="bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 hover:border-sky-400 transition-all px-3 py-2 rounded-lg text-sm font-bold shadow-sm transform hover:-translate-y-0.5 text-left w-full flex items-center">
-                                    <span class="mr-2 text-lg">🌪️</span> 位置大風吹
-                                </button>
-                                <button onclick="showModal('無敵星星', '最強的防禦魔法。<br><br>【效果】啟動後，本局接下來的<b> 2 次失分內</b>，無論發生什麼失誤，<b>全隊皆可免除懲罰（免喝）</b>！也可抵消對手的一次魔法卡。', '⭐', 'text-sky-500', 'border-sky-400')" class="bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 hover:border-sky-400 transition-all px-3 py-2 rounded-lg text-sm font-bold shadow-sm transform hover:-translate-y-0.5 text-left w-full flex items-center">
-                                    <span class="mr-2 text-lg">⭐</span> 無敵星星
-                                </button>
-                            </div>
+                            <div class="font-bold">失誤喝</div>
+                            <div class="text-xs text-slate-500">懲罰：失誤即飲</div>
                         </div>
+                    </div>
 
+                    <div onclick="showModal('得分喝', '最基本的獎勵（？）卡。<br><br>【觸發條件】你的隊伍成功得分。<br>【效果】得分者（最後擊球者）必須直接喝一杯！', '✨', 'text-amber-400', 'border-amber-500/30')" class="group glass-panel bg-white/5 p-4 flex items-center gap-4 cursor-pointer hover:bg-amber-500/10 hover:border-amber-500/30">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="star" class="text-amber-400 w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold">得分喝</div>
+                            <div class="text-xs text-slate-500">獎勵：得分共享</div>
+                        </div>
+                    </div>
+
+                    <div onclick="showModal('指定殺手', '充滿火藥味的殺手卡。<br><br>【觸發條件】你的隊伍得分後。<br>【效果】可以霸道指定對手場上<b>任意一人</b>喝一杯！', '🎯', 'text-sky-400', 'border-sky-500/30')" class="group glass-panel bg-white/5 p-4 flex items-center gap-4 cursor-pointer hover:bg-sky-500/10 hover:border-sky-500/30">
+                        <div class="w-12 h-12 rounded-xl bg-sky-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="target" class="text-sky-400 w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold">指定殺手</div>
+                            <div class="text-xs text-slate-500">攻擊：指定對象</div>
+                        </div>
+                    </div>
+
+                    <div onclick="showModal('連坐牽連', '生命共同體的極致展現。<br><br>【觸發條件】抽到此卡者發生失誤。<br>【效果】不只你要喝，你的<b>「雙人搭檔」</b>也必須陪你一起喝！', '🔗', 'text-indigo-400', 'border-indigo-500/30')" class="group glass-panel bg-white/5 p-4 flex items-center gap-4 cursor-pointer hover:bg-indigo-500/10 hover:border-indigo-500/30">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="link" class="text-indigo-400 w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold">連坐牽連</div>
+                            <div class="text-xs text-slate-500">連動：搭檔同飲</div>
+                        </div>
+                    </div>
+
+                    <div onclick="showModal('發球壯膽', '讓發球變得充滿未知數。<br><br>【觸發條件】輪到你發球前。<br>【效果】每次發球前，都必須<b>先乾一口</b>才能把球發出去！', '🦁', 'text-orange-400', 'border-orange-500/30')" class="group glass-panel bg-white/5 p-4 flex items-center gap-4 cursor-pointer hover:bg-orange-500/10 hover:border-orange-500/30">
+                        <div class="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="zap" class="text-orange-400 w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold">發球壯膽</div>
+                            <div class="text-xs text-slate-500">勇氣：發球前乾</div>
+                        </div>
                     </div>
                 </div>
+            </section>
 
-            </div>
+            <!-- Mission Control -->
+            <section class="glass-panel p-8 col-span-4 lg:col-span-3 reveal delay-3">
+                <div class="flex items-center gap-3 mb-8">
+                    <i data-lucide="scroll-text" class="text-amber-400"></i>
+                    <h2 class="text-2xl font-bold">任務與魔法</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Mission Instructions -->
+                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-center">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+                                <i data-lucide="dices" class="text-amber-400 w-5 h-5"></i>
+                            </span>
+                            <span class="text-xs font-black text-amber-400 uppercase tracking-widest">Mission Rule</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">派發神秘任務</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            賽前兩隊各派一人抽取任務。<br>
+                            比賽中達成任務條件，即可向裁判兌換一張 <span class="text-sky-400 font-bold">魔法卡</span>！
+                        </p>
+                    </div>
 
-            <!-- Footer / Rule -->
-            <div class="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 rounded-2xl p-5 text-center shadow-lg relative z-10 transform hover:-translate-y-1 transition-transform">
-                <h3 class="text-white font-black text-xl mb-2 drop-shadow-md">🏆 終極懲罰警告</h3>
-                <p class="text-white/95 text-sm font-bold">
-                    總積分最低的一組「雙人搭檔」<br>
-                    將接受賽後 <span class="bg-white text-rose-500 px-2 py-0.5 rounded-md mx-1 shadow-sm">大會終極特調</span> 處刑並負責清場！
+                    <!-- Magic Effects -->
+                    <div class="space-y-3">
+                        <span class="text-xs font-black text-sky-400 uppercase tracking-widest block mb-4">Magic Arsenal</span>
+                        <div onclick="showModal('地心引力', '指定對手在接下來的 3 分內<b>「禁止跳躍」</b>。', '⚡', 'text-sky-400', 'border-sky-500/30')" class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:border-sky-500/30 cursor-pointer transition-all">
+                            <span class="font-bold text-sm flex items-center gap-3">
+                                <i data-lucide="zap" class="w-4 h-4 text-sky-400"></i> 地心引力
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-600"></i>
+                        </div>
+                        <div onclick="showModal('位置大風吹', '立即強制對手場上 6 人<b>順時針輪轉兩個位置</b>。', '🌪️', 'text-sky-400', 'border-sky-500/30')" class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:border-sky-500/30 cursor-pointer transition-all">
+                            <span class="font-bold text-sm flex items-center gap-3">
+                                <i data-lucide="wind" class="w-4 h-4 text-sky-400"></i> 位置大風吹
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-600"></i>
+                        </div>
+                        <div onclick="showModal('無敵星星', '啟動後本局接下來的 2 次失分內全隊免罰。', '⭐', 'text-sky-400', 'border-sky-500/30')" class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:border-sky-500/30 cursor-pointer transition-all">
+                            <span class="font-bold text-sm flex items-center gap-3">
+                                <i data-lucide="star" class="w-4 h-4 text-sky-400"></i> 無敵星星
+                            </span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-600"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Penalty Warning -->
+            <section class="glass-panel p-8 col-span-4 lg:col-span-1 bg-gradient-to-br from-rose-500/20 to-orange-500/20 border-rose-500/30 reveal delay-4 flex flex-col justify-center items-center text-center">
+                <div class="w-16 h-16 rounded-full bg-rose-500/30 flex items-center justify-center mb-6 ring-4 ring-rose-500/10">
+                    <i data-lucide="skull" class="text-rose-400 w-8 h-8"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4">終極懲罰</h3>
+                <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                    總積分最低的搭檔將接受賽後 <span class="text-rose-400 font-bold">「大會終極特調」</span> 並負責清場！
                 </p>
-            </div>
-
-            <div class="text-center mt-6 text-xs text-slate-400 font-black tracking-widest bg-white/60 inline-block px-4 py-2 rounded-full w-full">
-                ⚠️ 飲酒過量有礙健康 · 開心打球平安回家 ⚠️
-            </div>
+                <div class="text-[10px] font-black tracking-widest text-rose-500/60 uppercase">High Stakes Survival</div>
+            </section>
 
         </div>
-    </div>
 
-    <!-- Modal Background & Content -->
-    <div id="cardModal" class="fixed inset-0 z-50 hidden flex justify-center items-center px-4 transition-opacity duration-200">
-        <!-- Backdrop -->
-        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm cursor-pointer" onclick="closeModal()"></div>
+        <!-- Footer Footer -->
+        <footer class="mt-20 py-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 reveal">
+            <p class="text-xs text-slate-500 font-medium tracking-widest uppercase">
+                ⚠️ 飲酒過量有礙健康 · 開心打球平安回家 ⚠️
+            </p>
+            <div class="flex gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-slate-500 hover:text-white transition-colors cursor-pointer">
+                    <i data-lucide="instagram" class="w-4 h-4"></i>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-slate-500 hover:text-white transition-colors cursor-pointer">
+                    <i data-lucide="share-2" class="w-4 h-4"></i>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Refined Modal -->
+    <div id="cardModal" class="fixed inset-0 z-50 hidden flex justify-center items-center p-4">
+        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-xl transition-opacity duration-300 opacity-0" id="modalBackdrop" onclick="closeModal()"></div>
         
-        <!-- Modal Card -->
-        <div id="modalContent" class="bg-white rounded-3xl p-8 max-w-sm w-full relative z-10 border-4 border-rose-400 shadow-2xl transform scale-95 opacity-0 transition-all duration-200 ease-out">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-300 hover:text-slate-500 bg-slate-100 hover:bg-slate-200 rounded-full w-8 h-8 flex items-center justify-center font-black text-xl transition-colors">
-                &times;
+        <div id="modalContent" class="glass-panel bg-slate-900 border-white/10 p-8 md:p-12 max-w-lg w-full relative z-10 shadow-2xl transform scale-90 opacity-0 transition-all duration-300 ease-out">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
             </button>
-            <div class="text-center mt-2">
-                <div id="modalIcon" class="text-7xl mb-4 drop-shadow-md transform hover:scale-110 transition-transform cursor-default">🃏</div>
-                <h2 id="modalTitle" class="text-3xl font-black mb-4 text-rose-500">卡牌名稱</h2>
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
-                    <p id="modalDesc" class="text-slate-600 font-bold leading-relaxed text-sm text-left">
+            <div class="text-center">
+                <div id="modalIconContainer" class="w-20 h-20 rounded-2xl mx-auto flex items-center justify-center text-5xl mb-8 transform transition-transform duration-500">
+                    <span id="modalIcon">🃏</span>
+                </div>
+                <h2 id="modalTitle" class="text-4xl font-black mb-6">卡牌名稱</h2>
+                <div class="bg-white/5 rounded-2xl p-6 border border-white/5 text-left mb-8">
+                    <p id="modalDesc" class="text-slate-300 font-medium leading-relaxed text-lg">
                         卡牌效果說明
                     </p>
                 </div>
-                <button onclick="closeModal()" class="mt-6 bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 px-8 rounded-full shadow-md transform hover:-translate-y-0.5 transition-all">
-                    了解！
+                <button onclick="closeModal()" class="glow-button w-full py-4 rounded-xl bg-white text-slate-950 font-black text-lg shadow-lg hover:bg-slate-200 transition-all">
+                    我知道了
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript for Modal -->
     <script>
-        function showModal(title, desc, icon, titleColor, borderColor) {
-            // 設定內容
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalTitle').className = `text-3xl font-black mb-4 ${titleColor}`;
-            document.getElementById('modalDesc').innerHTML = desc;
-            document.getElementById('modalIcon').innerText = icon;
-            
-            // 設定邊框顏色對應卡牌類型
-            const modalContent = document.getElementById('modalContent');
-            modalContent.className = `bg-white rounded-3xl p-8 max-w-sm w-full relative z-10 border-4 shadow-2xl transform scale-95 opacity-0 transition-all duration-200 ease-out ${borderColor}`;
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
-            // 顯示 Modal
+        function showModal(title, desc, icon, titleColor, borderColor) {
             const modal = document.getElementById('cardModal');
+            const backdrop = document.getElementById('modalBackdrop');
+            const content = document.getElementById('modalContent');
+            const iconElem = document.getElementById('modalIcon');
+            const titleElem = document.getElementById('modalTitle');
+            const iconContainer = document.getElementById('modalIconContainer');
+
+            // Set Content
+            titleElem.innerText = title;
+            titleElem.className = `text-4xl font-black mb-6 ${titleColor}`;
+            document.getElementById('modalDesc').innerHTML = desc;
+            iconElem.innerText = icon;
+            
+            // Dynamics
+            content.style.borderColor = borderColor;
+            iconContainer.className = `w-20 h-20 rounded-2xl mx-auto flex items-center justify-center text-5xl mb-8 ${titleColor} bg-white/5`;
+
+            // Display
             modal.classList.remove('hidden');
             
-            // 觸發彈出動畫
-            requestAnimationFrame(() => {
-                modalContent.classList.remove('scale-95', 'opacity-0');
-                modalContent.classList.add('scale-100', 'opacity-100');
-            });
+            // Animation
+            setTimeout(() => {
+                backdrop.classList.add('opacity-100');
+                content.classList.remove('scale-90', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
         }
 
         function closeModal() {
             const modal = document.getElementById('cardModal');
-            const modalContent = document.getElementById('modalContent');
+            const backdrop = document.getElementById('modalBackdrop');
+            const content = document.getElementById('modalContent');
             
-            // 縮小淡出動畫
-            modalContent.classList.remove('scale-100', 'opacity-100');
-            modalContent.classList.add('scale-95', 'opacity-0');
+            backdrop.classList.remove('opacity-100');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-90', 'opacity-0');
             
-            // 等待動畫結束後隱藏
             setTimeout(() => {
                 modal.classList.add('hidden');
-            }, 200);
+            }, 300);
         }
 
-        // 點擊 Esc 鍵也可以關閉視窗
+        // ESC to close
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !document.getElementById('cardModal').classList.contains('hidden')) {
-                closeModal();
-            }
+            if (e.key === 'Escape') closeModal();
         });
     </script>
 </body>
